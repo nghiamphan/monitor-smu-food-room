@@ -17,7 +17,7 @@ def input():
 
 
 def check_registration():
-    if not u.is_registration_open():
+    if u.is_registration_open():
         u.send_email(st.session_state["receiver_email"])
 
 
