@@ -33,12 +33,12 @@ def is_registration_open():
     driver.get(URL)
 
     # wait for the entire web to be fetched
-    time.sleep(0.1)
+    time.sleep(1)
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
     for date in soup.select("div[class*='date circle']"):
         print(date["class"])
-        if "not-bookable" not in date["class"]:
+        if "bookable" in date["class"]:
             return True
 
     return False
