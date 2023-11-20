@@ -5,7 +5,7 @@ import utils as u
 
 
 def input():
-    st.write(st.secrets["URL"])
+    st.write("[Register](%s)" % st.secrets["URL"])
     st.session_state["is_monitored"] = st.toggle("Monitor registration")
     st.session_state["time_interval"] = st.number_input(
         "Set time interval between each check (minutes)", value=5, min_value=1, format="%i"
@@ -19,6 +19,9 @@ def input():
 def check_registration():
     if u.is_registration_open():
         u.send_email(st.session_state["receiver_email"])
+        st.write("#### Registration OPEN!!!")
+    else:
+        st.write("#### Last Check: NO registration open")
 
 
 if __name__ == "__main__":

@@ -50,14 +50,21 @@ def send_email(receiver_email: str = None):
     SENDER_PASSWORD = st.secrets["SENDER_PASSWORD"]
     RECEIVER_EMAIL = receiver_email or st.secrets["RECEIVER_EMAIL"]
     EMAIL_SUBJECT = st.secrets["EMAIL_SUBJECT"]
-    EMAIL_BODY = f"{st.secrets['EMAIL_BODY']}\n{st.secrets['URL']}"
+    EMAIL_BODY = f"""
+        <html>
+            <body>
+                <p>{st.secrets['EMAIL_BODY']}</p>
+                <a href="{st.secrets['URL']}">Register</a>
+            </body>
+        </html>
+    """
 
     # Set up the MIME
     message = MIMEMultipart()
     message["Subject"] = EMAIL_SUBJECT
 
     # Attach the body to the email
-    message.attach(MIMEText(EMAIL_BODY, "plain"))
+    message.attach(MIMEText(EMAIL_BODY, "html"))
 
     # Connect to the SMTP server (in this case, Gmail's SMTP server)
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
